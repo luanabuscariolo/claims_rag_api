@@ -1,10 +1,13 @@
 # Python
 __pycache__/
-presentation/
+docs/
+frontend/
 *.pyc
 *.pyo
 *.pyd
 *.pyw
+
+TUTORIAL_FRONTEND.md
 
 # Virtual environment
 .venv/

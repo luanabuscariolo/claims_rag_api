@@ -1,6 +1,7 @@
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.136-009688)
+![Docker](https://img.shields.io/badge/docker-ready-2496ED?logo=docker&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 # Insurance Claims RAG API
@@ -92,6 +93,8 @@ insurance-rag/
 │       └── search.py        # /ask RAG endpoint
 ├── data/
 │   └── policies/            # Sample .txt policy documents
+├── Dockerfile               # Multi-stage image (port 9001)
+├── docker-compose.yml       # Compose with volume mount + env vars
 ├── requirements.txt
 └── README.md
 ```
@@ -102,10 +105,39 @@ insurance-rag/
 
 ### Prerequisites
 
-- Python 3.11+
+- Python 3.11+ **or** Docker / Docker Compose
 - (Optional) [LM Studio](https://lmstudio.ai/) for local LLM answer generation
 
-### Installation
+### Option A — Docker (recommended)
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/your-username/insurance-rag.git
+cd insurance-rag
+
+# 2. Build and start the container
+docker compose up --build
+```
+
+The API will be available at **http://localhost:9001**.
+
+Open **http://localhost:9001/docs** for the interactive Swagger UI.
+
+> The model (`all-MiniLM-L6-v2`) is baked into the image at build time. The `./data` folder is mounted as a volume so the SQLite database and ChromaDB index persist between restarts.
+
+#### Environment variables (LM Studio)
+
+Create a `.env` file in the project root:
+
+```env
+OPENAI_API_KEY=lm-studio
+OPENAI_BASE_URL=http://host.docker.internal:1234/v1
+OPENAI_MODEL=<your-loaded-model-name>
+```
+
+Then run `docker compose up --build` — the values are forwarded automatically.
+
+### Option B — Local Python
 
 ```bash
 # 1. Clone the repository
@@ -126,9 +158,9 @@ uvicorn app.main:app --reload --port 8000
 
 Open **http://localhost:8000/docs** for the interactive Swagger UI.
 
-### LM Studio (Optional)
+### LM Studio (Optional — local Python only)
 
-To enable local LLM answer generation:
+To enable local LLM answer generation when running without Docker:
 
 1. Download and install [LM Studio](https://lmstudio.ai/)
 2. Load a chat model (e.g. `Mistral 7B`, `Llama 3`)
@@ -247,6 +279,7 @@ curl -X PATCH http://localhost:8000/claims/1/status \
 | Embeddings | Sentence Transformers (`all-MiniLM-L6-v2`) |
 | LLM backend | LM Studio (local) / any OpenAI-compatible API |
 | Data validation | Pydantic v2 |
+| Containerization | Docker (multi-stage) + Docker Compose |
 
 ---
 
@@ -270,4 +303,4 @@ curl -X PATCH http://localhost:8000/claims/1/status \
 - [ ] PostgreSQL + pgvector migration
 - [ ] PDF support (pypdf)
 - [ ] Unit tests (pytest)
-- [ ] Docker support
+- [x] Docker support
