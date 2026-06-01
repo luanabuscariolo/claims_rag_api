@@ -84,9 +84,17 @@ class RAGService:
 
         where_filter = {"policy_type":policy_type} if policy_type else None
 
+        try:
+            count = self._collection.count()
+        except Exception:
+            count = 0
+
+        if count == 0:
+            return []
+
         results = self._collection.query(
             query_embeddings=query_embedding,
-            n_results=min(n_results, self._collection.count() or 1),
+            n_results=min(n_results, count),
             where=where_filter,
             include=["documents", "metadatas", "distances"],
         )
@@ -109,7 +117,14 @@ class RAGService:
 
     async def answer(self, question: str, policy_type: Optional[str] = None) -> dict:
       
-        retrieved_chunks = self.retrieve(question, policy_type)
+        try:
+            retrieved_chunks = self.retrieve(question, policy_type)
+        except Exception as e:
+            return {
+                "question": question,
+                "answer": f"Erro ao acessar a base de documentos: {e}. Tente reingerir os documentos via POST /documents/ingest/seed.",
+                "sources": [],
+            }
 
         if not retrieved_chunks:
             return {

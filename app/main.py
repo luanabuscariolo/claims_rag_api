@@ -9,6 +9,9 @@ Endpoints principais:
 /search            -perguntas em linguagem natural (RAG)
 /docs           -Swagger UI interativo
 """
+from dotenv import load_dotenv
+load_dotenv()
+
 from contextlib import asynccontextmanager
 
 from pathlib import Path
@@ -19,9 +22,6 @@ from fastapi.responses import JSONResponse
 from app.database import init_db
 from app.routes import claims, documents, search
 
-from dotenv import load_dotenv
-
-load_dotenv()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -34,8 +34,8 @@ async def lifespan(app: FastAPI):
     await init_db()  # Inicializar o banco de dados
 
     print("Aplicação iniciada com sucesso!")
-    print("Insurance RAG API pronta em http://localhost:9001")
-    print("Swagger UI disponível em http://localhost:9001/docs")
+    print("Insurance RAG API pronta em http://localhost:9002")
+    print("Swagger UI disponível em http://localhost:9002/docs")
 
     yield
     # Aqui você pode adicionar código de limpeza, como fechar conexões

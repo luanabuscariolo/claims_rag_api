@@ -10,7 +10,7 @@ sqlalchemy==2.0.50
 aiosqlite==0.20.0
 
 # vector store
-chromadb==0.5.0
+chromadb==1.5.9
 
 # embeddings (free, no API key needed)
 sentence-transformers==3.0.0
