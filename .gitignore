@@ -9,6 +9,7 @@ frontend/
 
 TUTORIAL_FRONTEND.md
 tutorial_postgresql_migration.md
+tutorial_sql_seguros.md
 
 # Virtual environment
 .venv/
