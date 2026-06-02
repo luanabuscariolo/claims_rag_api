@@ -8,6 +8,7 @@ frontend/
 *.pyw
 
 TUTORIAL_FRONTEND.md
+tutorial_postgresql_migration.md
 
 # Virtual environment
 .venv/
