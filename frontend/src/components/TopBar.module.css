@@ -1,0 +1,84 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 0 2rem;
+  height: 52px;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.brandSymbol {
+  font-size: 20px;
+  color: var(--c-accent);
+  line-height: 1;
+}
+
+.brandText {
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.brandText strong {
+  color: var(--c-accent);
+  font-weight: 600;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 0;
+}
+
+.tabBtn {
+  height: 100%;
+  padding: 0 1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.tabBtn:hover {
+  color: var(--color-text);
+}
+
+.tabBtn.active {
+  color: var(--color-text);
+  border-bottom-color: var(--c-accent);
+  font-weight: 500;
+}
+
+/* Aba de ação (+ Novo Sinistro) — destaque visual */
+.actionTab {
+  color: var(--c-accent);
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.actionTab:hover {
+  color: var(--c-accent);
+  background: rgba(55, 138, 221, 0.06);
+  border-radius: 6px 6px 0 0;
+}
+
+.actionTab.active {
+  color: var(--c-accent);
+  border-bottom-color: var(--c-accent);
+}
