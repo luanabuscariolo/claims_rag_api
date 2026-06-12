@@ -4,10 +4,16 @@ Insurance Claims RAG API
 Sistema de gestão de sinistros com busca inteligente por linguagem natural.
 
 Endpoints principais:
-/claims         -CRUD de sinistros
-/documents      -ingestão de apólices no índice vetorial
-/search            -perguntas em linguagem natural (RAG)
-/docs           -Swagger UI interativo
+/claims         - CRUD de sinistros (tabela local)
+/documents      - ingestão de apólices no índice vetorial
+/search         - perguntas em linguagem natural (RAG)
+/clientes       - clientes do banco remoto
+/corretores     - corretores do banco remoto
+/apolices       - apólices do banco remoto
+/coberturas     - coberturas do banco remoto
+/sinistros      - sinistros do banco remoto (100 registros reais)
+/pagamentos     - pagamentos do banco remoto
+/docs           - Swagger UI interativo
 """
 from dotenv import load_dotenv
 load_dotenv()
@@ -21,6 +27,7 @@ from fastapi.responses import JSONResponse
 
 from app.database import init_db
 from app.routes import claims, documents, search
+from app.routes import clientes, corretores, apolices, coberturas, sinistros, pagamentos
 
 
 @asynccontextmanager
@@ -64,6 +71,12 @@ app.add_middleware(
 app.include_router(claims.router)
 app.include_router(documents.router)
 app.include_router(search.router)
+app.include_router(clientes.router)
+app.include_router(corretores.router)
+app.include_router(apolices.router)
+app.include_router(coberturas.router)
+app.include_router(sinistros.router)
+app.include_router(pagamentos.router)
 
 @app.get("/health", tags=["Health"])
 async def health():

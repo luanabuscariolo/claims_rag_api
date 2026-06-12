@@ -1,5 +1,24 @@
 version: "3.9"
 services:
+
+  postgres:
+      image: postgres:16-alpine
+      container_name: insurance_postgres
+      environment:
+        POSTGRES_USER: ${POSTGRES_USER:-insurance_user}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-insurance_pass}
+        POSTGRES_DB: ${POSTGRES_DB:-insurance_db}
+      ports:
+        - "5432:5432"
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      restart: unless-stopped
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-insurance_user} -d ${POSTGRES_DB:-insurance_db}"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+        start_period: 30s
   api:
     build:
       context: .
@@ -11,6 +30,8 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
       - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
       - OPENAI_BASE_URL=${OPENAI_BASE_URL:-http://host.docker.internal:1234/v1}
+       # Lê a URL completa do arquivo .env (aponta para o banco remoto ou local)
+      - DATABASE_URL=${DATABASE_URL}
     volumes:
       - ./data:/app/data
     restart: unless-stopped

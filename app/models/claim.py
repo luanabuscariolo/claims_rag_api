@@ -4,7 +4,7 @@ from enum import StrEnum
 from pydantic import BaseModel, Field
 
 from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy import Column, Float, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Numeric
 
 
 # declarative base class
@@ -19,8 +19,8 @@ class ClaimDB(Base):
     claimant_name = Column(String(50), nullable=False)
     claim_type = Column(String(50), nullable=False) #Enum: auto, home, health
     description = Column(String(255), nullable=False)
-    amount_claimed = Column(Float, nullable=False)
-    amount_approved = Column(Float, nullable=True)
+    amount_claimed = Column(Numeric(12, 2), nullable=False)
+    amount_approved = Column(Numeric(12, 2), nullable=True)
     status = Column(String(30), nullable=False, default="pending") #Enum: pending, approved, rejected, in_review
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

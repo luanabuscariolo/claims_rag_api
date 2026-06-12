@@ -1,14 +1,21 @@
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
+import os
 
 from app.models.claim import Base
+import app.models.insurance  # noqa: F401 — registers all 6 tables with Base.metadata
 
-DATABASE_URL = "sqlite+aiosqlite:///./data/insurance.db"
+# DATABASE_URL = "sqlite+aiosqlite:///./data/insurance.db"
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql+asyncpg://postgres:432931@localhost:5432/seguros_treino"
+)
 
 # Create async engine and sessionmaker
 engine = create_async_engine(
     DATABASE_URL,
     echo=True, 
-    connect_args={"check_same_thread": False}
+    pool_size=5,
+    max_overflow=10,
 )
 
 async_session = async_sessionmaker(
