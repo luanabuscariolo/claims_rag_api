@@ -9,7 +9,7 @@ from chromadb.config import Settings
 from sentence_transformers import SentenceTransformer
 
 CHROMA_PATH = "./data/chroma"
-EMBED_MODEL = "all-MiniLM-L6-v2"
+EMBED_MODEL = "all-MiniLM-L6-v2" 
 CHUNK_SIZE = 500
 CHUNK_OVERLAP = 80
 TOP_K = 4
