@@ -5,12 +5,7 @@ __pycache__/
 *.pyd
 *.pyw
 
-TUTORIAL_FRONTEND.md
-tutorial_postgresql_migration.md
-tutorial_sql_seguros.md
-setup.sql
-MIGRATION_GUIDE.md
-TUTORIAL_NOVOS_ENDPOINTS.md
+docs/
 
 # Virtual environment
 .venv/
